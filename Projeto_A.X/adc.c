@@ -16,6 +16,7 @@ int ADC_input(uint16_t a){
     }
      AD1CHSbits.CH0SA = a; // Select AN a as input for A/D converter
      TRISB=TRISB | (0x80000>>(15-a));//Input-> 1, shifts first bit 1 to required position, "or" to force the 1.
+     AD1PCFGbits.PCFG0 = a;
      return 0;
 }
 

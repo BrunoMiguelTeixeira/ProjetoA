@@ -3,6 +3,7 @@
 #include "adc.h"
 #include "sys_config.h"
 #include <xc.h>
+#include <stdio.h>
 
 #define PBCLOCK 40000000L // Peripheral Bus Clock frequency, in Hz
 
@@ -19,9 +20,11 @@ int main(void){
     
     //SETUP ADC
     ADC_init();
-    if(ADC_input(ADC_CHAN)==-1){
+   
+    while(ADC_input(ADC_CHAN)==-1){
         PutChar('T');
     }
+    
     ADC_enable();
     
     //SETUP TIMERS
@@ -29,13 +32,17 @@ int main(void){
     //SETUP PWM
     
     //Variabels
-    float val;
+    float val=0;
     
     while(1){
         IFS1bits.AD1IF = 0; // Reset interrupt flag
         AD1CON1bits.ASAM = 1; // Start conversion
         while (IFS1bits.AD1IF == 0); // Wait fo EOC
         val=ADC_read();
+        //printf("%f\r\n",val);
+        PutFloat(val);
+        PutChar('\r');
+        PutChar('\n');
     }
     return 0;
 }

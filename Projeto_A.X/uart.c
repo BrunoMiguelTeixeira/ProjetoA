@@ -122,5 +122,47 @@ void PutChar(uint8_t txChar)
     while(U1STAbits.UTXBF); // wait for TX buffer to be empty
     U1ATXREG = txChar;
 }
+/*******************************************************************
+ * Function: PutInt()
+ * Precondition:
+ * Input:       Integer
+ * Output:      None
+ * Side Effects:None
+ * Overview:    Puts the integer has a char and into UART tx reg for transmission.
+ * Note:        None
+ *******************************************************************/
+PutInt(int Integer){
+        if (Integer == 0) {
+        PutChar('0');
+        return;
+    }
 
+    // Handle negative numbers
+    if (Integer < 0) {
+        PutChar('-');
+        Integer = -Integer;
+    }
+
+    // Recursively print digits
+    if (Integer / 10 != 0) {
+        PutInt(Integer / 10);
+    }
+
+    // Print the last digit
+    PutChar(Integer % 10 + '0');
+}
+
+/*
+void PutFloat(float Float){
+    PutInt((int)Float);
+    PutChar('.');
+    Float=(Float-(int)Float)*1000;
+    PutInt((int)Float);
+}*/
+PutFloat(float Float){
+    PutInt((int) Float);
+    Float=(Float-(int)Float)*1000;
+    PutChar('.');
+    PutInt(Float);
+}
 /***************************************End Of File*************************************/
