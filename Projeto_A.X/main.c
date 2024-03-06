@@ -33,6 +33,9 @@ int main(void){
     
     //Variabels
     float val=0;
+    while(1){
+        PutStringn("Hello!Hello!");
+    }
     
     while(1){
         IFS1bits.AD1IF = 0; // Reset interrupt flag

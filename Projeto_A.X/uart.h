@@ -14,8 +14,9 @@ int UartInit(uint64_t pbclock, uint32_t br);
 int UartClose(void);
 int GetChar(uint8_t *byte);
 void PutChar(uint8_t txChar);
-/////////
 void PutInt(int Integer);
 void PutFloat(float Float);
+void PutString(char *Char);
+void PutStringn(char *Char);
 
 #endif

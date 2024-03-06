@@ -26,3 +26,12 @@ void ADC_enable(void){
 float ADC_read(void){
     return (ADC1BUF0 * 3.3) / 1023;
 }
+
+uint8_t ADC_IF(void){
+    return IFS1bits.AD1IF;
+}
+
+void ADC_start(void){
+    IFS1bits.AD1IF = 0; // Reset interrupt flag
+    AD1CON1bits.ASAM = 1; // Start conversion
+}

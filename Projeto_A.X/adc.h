@@ -9,5 +9,6 @@ void ADC_init(void);
 int ADC_input(uint16_t a);
 void ADC_enable(void);
 float ADC_read(void);
-
+uint8_t ADC_IF(void);
+void ADC_start(void);
 #endif

@@ -122,6 +122,21 @@ void PutChar(uint8_t txChar)
     while(U1STAbits.UTXBF); // wait for TX buffer to be empty
     U1ATXREG = txChar;
 }
+
+void PutString(char *Char)
+{
+    //check size of string(Not working!)
+    size_t elements=sizeof(Char)/sizeof(Char[0]);
+    for (uint8_t i=0;i<=elements+1;i++){
+        PutChar(Char[i]);
+    }
+}
+
+void PutStringn(char *Char){
+    PutString(Char);
+    PutChar('\r');
+    PutChar('\n');
+}
 /*******************************************************************
  * Function: PutInt()
  * Precondition:
@@ -152,17 +167,22 @@ PutInt(int Integer){
     PutChar(Integer % 10 + '0');
 }
 
-/*
-void PutFloat(float Float){
-    PutInt((int)Float);
-    PutChar('.');
-    Float=(Float-(int)Float)*1000;
-    PutInt((int)Float);
-}*/
-PutFloat(float Float){
+/*******************************************************************
+ * Function: PutFloat()
+ * Precondition:
+ * Input:       Float
+ * Output:      None
+ * Side Effects:None
+ * Overview:    Splits Float into two integers to be printed has a char and into UART tx reg for transmission.
+ * Note:        None
+ *******************************************************************/
+PutFloat(float Float,uint8_t val){
+    if(val<1){
+        PutStringn("ERR FLOAT SIZE");
+    }
     PutInt((int) Float);
-    Float=(Float-(int)Float)*1000;
+    Float=(Float-(int)Float)*10*val;
     PutChar('.');
-    PutInt(Float);
+    PutInt((int)Float);
 }
 /***************************************End Of File*************************************/
