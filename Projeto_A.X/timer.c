@@ -112,6 +112,7 @@ void ConfigTimer2(uint32_t targetFreq, uint8_t interrupt, uint8_t timer32bit){
 
     if(interrupt == 1){
         IFS0bits.T2IF = 0;          // Clear Timer 2 interrupt flag
+        IPC2bits.T2IP=5;
         IEC0bits.T2IE = 1;          // Enable Timer 2 interrupt
     }
 
@@ -172,6 +173,7 @@ void ConfigTimer3(uint32_t targetFreq, uint8_t interrupt){
 
     if(interrupt == 1){
         IFS0bits.T3IF = 0;          // Clear Timer 3 interrupt flag
+        IPC3bits.T3IP = 5;
         IEC0bits.T3IE = 1;          // Enable Timer 3 interrupt
     }
 

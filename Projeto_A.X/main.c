@@ -1,15 +1,53 @@
 #include "config_bits.h"
 #include "uart.h"
 #include "adc.h"
+#include "timer.h"
+#include "pwm.h"
 #include "sys_config.h"
+#include <sys/attribs.h>
 #include <xc.h>
 #include <stdio.h>
 
-#define PBCLOCK 40000000L // Peripheral Bus Clock frequency, in Hz
+
+volatile float val = 2;
+
+void __ISR (_TIMER_3_VECTOR, IPL6SRS) T3Interrupt(void)
+{
+    ADC_start();
+    while(ADC_IF()==0);
+    val=ADC_read();
+    PutFloat(val,4);
+    PutChar('\r');
+    PutChar('\n');
+    ClearIntFlagTimer3();
+}
+
+void __ISR (_TIMER_2_VECTOR, IPL5SRS) T2Interrupt(void)
+{
+    int a=(val/3.3)*100;
+    ConfigPWM(a);
+    PutInt(a);
+    PutChar('\r');
+    PutChar('\n');
+    ClearIntFlagTimer2();
+}
+
 
 int main(void){
     //PORTS
+    //PutStringn("Hello");
     TRISASET=0x0008; //LED for UART
+    
+    // Config Digital Pin 2 as output
+    TRISEbits.TRISE8 = 0;       // Set Digital Pin 2
+    LATEbits.LATE8 = 0;         // Turn off Digital Pin 2
+    
+    /* Set Interrupt Controller for multi-vector mode */
+    INTCONSET = _INTCON_MVEC_MASK;
+    
+    /* Enable Interrupt Exceptions */
+    // set the CP0 status IE bit high to turn on interrupts globally
+    __builtin_enable_interrupts();
     
     //SETUP UART
     if(UartInit(PBCLOCK, 115200) != UART_SUCCESS) {
@@ -28,24 +66,32 @@ int main(void){
     ADC_enable();
     
     //SETUP TIMERS
-    
-    //SETUP PWM
-    
+    ConfigTimer3(SAMPL_FREQ_HZ,1);    //Input
+    ConfigTimer2(PWM_FREQ_HZ,1,0);//Output      
+    // STARTUP TIMER
+    StartTimer2();
+    StartTimer3();
+    PutInt(timer3.PR);
+    PutChar('\r');
+    PutChar('\n');
     //Variabels
-    float val=0;
+    while(1);
+    /*
     while(1){
-        PutStringn("Hello!Hello!");
-    }
-    
+        while(GetIntFlagTimer2() == 0){}
+        ClearIntFlagTimer2();
+        LATEbits.LATE8 = !LATEbits.LATE8;     // Toggle Digital Pin 2
+        PutChar('+');
+    };
     while(1){
-        IFS1bits.AD1IF = 0; // Reset interrupt flag
-        AD1CON1bits.ASAM = 1; // Start conversion
-        while (IFS1bits.AD1IF == 0); // Wait fo EOC
+        while(GetIntFlagTimer2() == 0){};
+        ADC_start();
+        while(ADC_IF() == 0);
+        ClearIntFlagTimer2();
         val=ADC_read();
-        //printf("%f\r\n",val);
-        PutFloat(val);
+        PutFloat(val,2);
         PutChar('\r');
         PutChar('\n');
-    }
+    }*/
     return 0;
 }

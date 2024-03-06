@@ -127,7 +127,7 @@ void PutString(char *Char)
 {
     //check size of string(Not working!)
     size_t elements=sizeof(Char)/sizeof(Char[0]);
-    for (uint8_t i=0;i<=elements+1;i++){
+    for (uint8_t i=0;i<=elements;i++){
         PutChar(Char[i]);
     }
 }

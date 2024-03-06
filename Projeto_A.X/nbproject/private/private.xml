@@ -4,10 +4,16 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/bruno/Desktop/SIE/ProjetoA/Projeto_A.X/adc.c</file>
+            <file>file:/C:/Users/bruno/Desktop/SIE/ProjetoA/Projeto_A.X/config_bits.h</file>
+            <file>file:/C:/Users/bruno/Desktop/SIE/ProjetoA/Projeto_A.X/pwm.h</file>
+            <file>file:/C:/Users/bruno/Desktop/SIE/ProjetoA/Projeto_A.X/timer.h</file>
             <file>file:/C:/Users/bruno/Desktop/SIE/ProjetoA/Projeto_A.X/main.c</file>
+            <file>file:/C:/Users/bruno/Desktop/SIE/ProjetoA/Projeto_A.X/sys_config.h</file>
+            <file>file:/C:/Users/bruno/Desktop/SIE/ProjetoA/Projeto_A.X/timer.c</file>
             <file>file:/C:/Users/bruno/Desktop/SIE/ProjetoA/Projeto_A.X/uart.c</file>
             <file>file:/C:/Users/bruno/Desktop/SIE/ProjetoA/Projeto_A.X/adc.h</file>
             <file>file:/C:/Users/bruno/Desktop/SIE/ProjetoA/Projeto_A.X/uart.h</file>
+            <file>file:/C:/Users/bruno/Desktop/SIE/ProjetoA/Projeto_A.X/pwm.c</file>
         </group>
     </open-files>
 </project-private>
