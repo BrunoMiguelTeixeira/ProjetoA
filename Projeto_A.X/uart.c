@@ -130,6 +130,11 @@ void PutString(char *Char)
     for (uint8_t i=0;i<=elements;i++){
         PutChar(Char[i]);
     }
+
+    /* while(*Char != '\0'){
+        PutChar(*Char);
+        Char++;
+    } */
 }
 
 void PutStringn(char *Char){

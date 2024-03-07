@@ -24,7 +24,7 @@ void ConfigTimer1(uint32_t targetFreq, uint8_t interrupt){
     uint16_t prescaler = 0;
     uint32_t fout_presc = 0;
 
-    T1CON = 0;                  // Clear Timer 1 configuration
+    T1CON = 0;                      // Clear Timer 1 configuration
 
     // ----- Automatic calculation of the values for the Timer 1 configuration -----
     prescaler = PBCLOCK / ((65535+1) * targetFreq); // Calculate the prescaler value
@@ -42,6 +42,7 @@ void ConfigTimer1(uint32_t targetFreq, uint8_t interrupt){
     
     if(interrupt == 1){
         IFS0bits.T1IF = 0;          // Clear Timer 1 interrupt flag
+        IPC1bits.T1IP = 5;          // Set Timer 1 interrupt priority
         IEC0bits.T1IE = 1;          // Enable Timer 1 interrupt
     }
 
@@ -112,7 +113,7 @@ void ConfigTimer2(uint32_t targetFreq, uint8_t interrupt, uint8_t timer32bit){
 
     if(interrupt == 1){
         IFS0bits.T2IF = 0;          // Clear Timer 2 interrupt flag
-        IPC2bits.T2IP=5;
+        IPC2bits.T2IP = 5;          // Set Timer 2 interrupt priority
         IEC0bits.T2IE = 1;          // Enable Timer 2 interrupt
     }
 
@@ -173,7 +174,7 @@ void ConfigTimer3(uint32_t targetFreq, uint8_t interrupt){
 
     if(interrupt == 1){
         IFS0bits.T3IF = 0;          // Clear Timer 3 interrupt flag
-        IPC3bits.T3IP = 5;
+        IPC3bits.T3IP = 5;          // Set Timer 3 interrupt priority
         IEC0bits.T3IE = 1;          // Enable Timer 3 interrupt
     }
 
@@ -243,7 +244,8 @@ void ConfigTimer4(uint32_t targetFreq, uint8_t interrupt, uint8_t timer32bit){
 
     if(interrupt == 1){
         IFS0bits.T4IF = 0;          // Clear Timer 4 interrupt flag
-        IEC0bits.T4IE = 1;
+        IPC4bits.T4IP = 5;          // Set Timer 4 interrupt priority
+        IEC0bits.T4IE = 1;          // Enable Timer 4 interrupt
     }
 
     timer4.prescaler = prescaler;
@@ -299,6 +301,7 @@ void ConfigTimer5(uint32_t targetFreq, uint8_t interrupt){
 
     if(interrupt == 1){
         IFS0bits.T5IF = 0;          // Clear Timer 5 interrupt flag
+        IPC5bits.T5IP = 5;          // Set Timer 5 interrupt priority
         IEC0bits.T5IE = 1;          // Enable Timer 5 interrupt
     }
 
