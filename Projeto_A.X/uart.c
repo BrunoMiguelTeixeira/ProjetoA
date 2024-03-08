@@ -125,16 +125,10 @@ void PutChar(uint8_t txChar)
 
 void PutString(char *Char)
 {
-    //check size of string(Not working!)
-    size_t elements=sizeof(Char)/sizeof(Char[0]);
-    for (uint8_t i=0;i<=elements;i++){
-        PutChar(Char[i]);
-    }
-
-    /* while(*Char != '\0'){
+    while(*Char != '\0'){
         PutChar(*Char);
         Char++;
-    } */
+    }
 }
 
 void PutStringn(char *Char){
