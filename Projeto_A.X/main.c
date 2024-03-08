@@ -25,7 +25,7 @@ void __ISR (_TIMER_3_VECTOR, IPL6SRS) T3Interrupt(void)
 void __ISR (_TIMER_2_VECTOR, IPL5SRS) T2Interrupt(void)
 {
     int pwm = (val/3.3)*100;
-    ConfigPWM(pwm);
+    ConfigPWM5(2,pwm);
     PutInt(pwm);
     PutChar('\r');
     PutChar('\n');

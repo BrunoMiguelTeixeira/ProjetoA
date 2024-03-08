@@ -10,11 +10,11 @@ extern struct TimerConfig timer3;
 extern struct TimerConfig timer4;
 extern struct TimerConfig timer5;
 
-uint8_t ConfigPWM1(uint8_t timerSelected, uint8_t dutyCycle)
+uint8_t ConfigPWM1(uint8_t timerSelect, uint8_t dutyCycle)
 {
     struct TimerConfig timerSelected;
-    if (timerSelected == 2)         { timerSelected = timer2; OC1CONbits.OCTSEL = 0; }
-    else if (timerSelected == 3)    { timerSelected = timer3; OC1CONbits.OCTSEL = 1;}
+    if (timerSelect == 2)         { timerSelected = timer2; OC1CONbits.OCTSEL = 0; }
+    else if (timerSelect == 3)    { timerSelected = timer3; OC1CONbits.OCTSEL = 1;}
     else{
         return 0x02;    // Timer not available, Exception 2
     }
@@ -34,11 +34,11 @@ uint8_t ConfigPWM1(uint8_t timerSelected, uint8_t dutyCycle)
     return 0x00;
 };
 
-uint8_t ConfigPWM2(uint8_t timerSelected, uint8_t dutyCycle)
+uint8_t ConfigPWM2(uint8_t timerSelect, uint8_t dutyCycle)
 {
     struct TimerConfig timerSelected;
-    if (timerSelected == 2)         { timerSelected = timer2; OC2CONbits.OCTSEL = 0; }
-    else if (timerSelected == 3)    { timerSelected = timer3; OC2CONbits.OCTSEL = 1;}
+    if (timerSelect == 2)         { timerSelected = timer2; OC2CONbits.OCTSEL = 0; }
+    else if (timerSelect == 3)    { timerSelected = timer3; OC2CONbits.OCTSEL = 1;}
     else{
         return 0x02;    // Timer not available, Exception 2
     }
@@ -58,11 +58,11 @@ uint8_t ConfigPWM2(uint8_t timerSelected, uint8_t dutyCycle)
     return 0x00;
 };
 
-uint8_t ConfigPWM3(uint8_t timerSelected, uint8_t dutyCycle)
+uint8_t ConfigPWM3(uint8_t timerSelect, uint8_t dutyCycle)
 {
     struct TimerConfig timerSelected;
-    if (timerSelected == 2)         { timerSelected = timer2; OC3CONbits.OCTSEL = 0; }
-    else if (timerSelected == 3)    { timerSelected = timer3; OC3CONbits.OCTSEL = 1;}
+    if (timerSelect == 2)         { timerSelected = timer2; OC3CONbits.OCTSEL = 0; }
+    else if (timerSelect == 3)    { timerSelected = timer3; OC3CONbits.OCTSEL = 1;}
     else{
         return 0x02;    // Timer not available, Exception 2
     }
@@ -82,11 +82,11 @@ uint8_t ConfigPWM3(uint8_t timerSelected, uint8_t dutyCycle)
     return 0x00;
 };
 
-uint8_t ConfigPWM4(uint8_t timerSelected, uint8_t dutyCycle)
+uint8_t ConfigPWM4(uint8_t timerSelect, uint8_t dutyCycle)
 {
     struct TimerConfig timerSelected;
-    if (timerSelected == 2)         { timerSelected = timer2; OC4CONbits.OCTSEL = 0; }
-    else if (timerSelected == 3)    { timerSelected = timer3; OC4CONbits.OCTSEL = 1;}
+    if (timerSelect == 2)         { timerSelected = timer2; OC4CONbits.OCTSEL = 0; }
+    else if (timerSelect == 3)    { timerSelected = timer3; OC4CONbits.OCTSEL = 1;}
     else{
         return 0x02;    // Timer not available, Exception 2
     }
@@ -106,11 +106,11 @@ uint8_t ConfigPWM4(uint8_t timerSelected, uint8_t dutyCycle)
     return 0x00;
 };
 
-uint8_t ConfigPWM5(uint8_t timerSelected, uint8_t dutyCycle)
+uint8_t ConfigPWM5(uint8_t timerSelect, uint8_t dutyCycle)
 {
     struct TimerConfig timerSelected;
-    if (timerSelected == 2)         { timerSelected = timer2; OC5CONbits.OCTSEL = 0; }
-    else if (timerSelected == 3)    { timerSelected = timer3; OC5CONbits.OCTSEL = 1;}
+    if (timerSelect == 2)         { timerSelected = timer2; OC5CONbits.OCTSEL = 0; }
+    else if (timerSelect == 3)    { timerSelected = timer3; OC5CONbits.OCTSEL = 1;}
     else{
         return 0x02;    // Timer not available, Exception 2
     }
