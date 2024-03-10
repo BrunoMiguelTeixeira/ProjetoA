@@ -30,9 +30,15 @@ uint8_t ConfigPWM1(uint8_t timerSelect, uint8_t dutyCycle)
     OC1RS = ((timerSelected.PR + 1) * dutyCycle) / 100;
     OC1CONbits.OCM = 0b110;     // PWM mode on OC1; Fault pin disabled
     OC1CONbits.ON = 1;          // Enable OC1 module 
-
+    // Start PWM generation
+    T2CONbits.TON=1; // Start the timer
     return 0x00;
 };
+void UpdatePWM(uint8_t timerSelect,uint8_t dutyCycle){
+    struct TimerConfig timerSelected;
+    timerSelected = timer2;
+    OC1RS = ((timerSelected.PR + 1) * dutyCycle) / 100;
+}
 
 uint8_t ConfigPWM2(uint8_t timerSelect, uint8_t dutyCycle)
 {

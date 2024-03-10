@@ -9,7 +9,7 @@
 #include <stdio.h>
 
 
-volatile float val = 2;
+volatile float val;
 
 void __ISR (_TIMER_3_VECTOR, IPL6SRS) T3Interrupt(void)
 {
@@ -22,7 +22,7 @@ void __ISR (_TIMER_3_VECTOR, IPL6SRS) T3Interrupt(void)
 void __ISR (_TIMER_2_VECTOR, IPL5SRS) T2Interrupt(void)
 {
     int pwm = (val/3.3)*100;
-    ConfigPWM1(2,pwm);
+    UpdatePWM(2,pwm);
     ClearIntFlagTimer2();
 }
 
@@ -61,19 +61,19 @@ int main(void){
     //SETUP TIMERS
     ConfigTimer3(SAMPL_FREQ_HZ,1);      // Input
     ConfigTimer2(PWM_FREQ_HZ,1,0);      // Output      
-    
     // STARTUP TIMER
-    //StartTimer2();
-    //StartTimer3();
+    StartTimer2();
+    StartTimer3();
+    ConfigPWM1(2,0.5);
     // Variables
     uint8_t choice=0;
     uint8_t memchoice=-1;
     uint8_t catcher;
     uint8_t menu=1;
     uint8_t wait;
-    int total;
     while(1)
     {
+        /*
         switch(choice){
             case 0:     //MAIN MENU
                 if (memchoice!=0){
@@ -145,25 +145,16 @@ int main(void){
                 break;
             case 99:                                  //choice case
                 if (menu==1){
-                    choice=GetButton(1);
+                    choice=GetInteger();
                 }
                 else{
-                    wait=1;
-                    total=0;
-                    while(wait){
-                        val=GetButton(&wait);
-                        if(-1<val && val<10){
-                            PutInt(val);
-                            total=val+(total*10);
-                        }
-                    }
-                    val=total;
+                    val=GetInteger();
                     choice=memchoice;
                 }
                 break;
             default:
                 break;
-        }
-    };
+        };*/
+    }
     return 0;
 }

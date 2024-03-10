@@ -190,17 +190,21 @@ void PutFloat(float Float,uint8_t val){
     PutInt((int)Float);
 }
 
-uint8_t GetButton(uint8_t *Enter_press){
+uint8_t GetInteger(void){
     uint8_t dummy;
-    if(GetChar(&dummy) == UART_SUCCESS){
-        if(dummy==13){
-            *Enter_press=0;
-        }
-        if(dummy!=194 & 10>dummy-'0'>-1){
-            return dummy-'0';
+    int total=0;
+    while(1){
+        if(GetChar(&dummy) == UART_SUCCESS){        
+            if(dummy==13){
+                return total;
+            }
+            if(dummy!=194 & 10>dummy-'0'>-1){
+                total= (dummy-'0')+total*10;
+                PutInt(dummy-'0');
+            }
         }
     }
-    return 99;
+    
 }
 
 /***************************************End Of File*************************************/

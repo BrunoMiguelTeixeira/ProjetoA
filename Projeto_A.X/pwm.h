@@ -54,5 +54,5 @@ uint8_t ConfigPWM4(uint8_t timerSelect, uint8_t dutyCycle);
 */
 uint8_t ConfigPWM5(uint8_t timerSelect, uint8_t dutyCycle);
 
-
+void UpdatePWM(uint8_t timerSelect,uint8_t dutyCycle);
 #endif	/* PWM_H */
