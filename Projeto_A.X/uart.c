@@ -125,7 +125,7 @@ void PutChar(uint8_t txChar)
 
 void PutString(char *Char)
 {
-    while(*Char != '\0'){
+    while(*Char != 0){
         PutChar(*Char);
         Char++;
     }
@@ -136,6 +136,11 @@ void PutStringn(char *Char){
     PutChar('\r');
     PutChar('\n');
 }
+void nPutString(char *Char){
+    PutChar('\r');
+    PutChar('\n');
+    PutString(Char);
+}
 /*******************************************************************
  * Function: PutInt()
  * Precondition:
@@ -145,7 +150,7 @@ void PutStringn(char *Char){
  * Overview:    Puts the integer has a char and into UART tx reg for transmission.
  * Note:        None
  *******************************************************************/
-PutInt(int Integer){
+void PutInt(int Integer){
         if (Integer == 0) {
         PutChar('0');
         return;
@@ -175,7 +180,7 @@ PutInt(int Integer){
  * Overview:    Splits Float into two integers to be printed has a char and into UART tx reg for transmission.
  * Note:        None
  *******************************************************************/
-PutFloat(float Float,uint8_t val){
+void PutFloat(float Float,uint8_t val){
     if(val<1){
         PutStringn("ERR FLOAT SIZE");
     }
@@ -184,4 +189,18 @@ PutFloat(float Float,uint8_t val){
     PutChar('.');
     PutInt((int)Float);
 }
+
+uint8_t GetButton(uint8_t *Enter_press){
+    uint8_t dummy;
+    if(GetChar(&dummy) == UART_SUCCESS){
+        if(dummy==13){
+            *Enter_press=0;
+        }
+        if(dummy!=194 & 10>dummy-'0'>-1){
+            return dummy-'0';
+        }
+    }
+    return 99;
+}
+
 /***************************************End Of File*************************************/

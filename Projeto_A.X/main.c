@@ -16,26 +16,19 @@ void __ISR (_TIMER_3_VECTOR, IPL6SRS) T3Interrupt(void)
     ADC_start();
     while(ADC_IF() == 0);
     val = ADC_read();
-    PutFloat(val,4);
-    PutChar('\r');
-    PutChar('\n');
     ClearIntFlagTimer3();
 }
 
 void __ISR (_TIMER_2_VECTOR, IPL5SRS) T2Interrupt(void)
 {
     int pwm = (val/3.3)*100;
-    ConfigPWM5(2,pwm);
-    PutInt(pwm);
-    PutChar('\r');
-    PutChar('\n');
+    ConfigPWM1(2,pwm);
     ClearIntFlagTimer2();
 }
 
 
 int main(void){
-    //PORTS
-    //PutStringn("Hello");
+    //TRIS
     TRISASET = 0x0008; //LED for UART
     
     // Config Digital Pin 2 as output
@@ -70,30 +63,107 @@ int main(void){
     ConfigTimer2(PWM_FREQ_HZ,1,0);      // Output      
     
     // STARTUP TIMER
-    StartTimer2();
-    StartTimer3();
-    PutInt(timer3.PR);
-    PutChar('\r');
-    PutChar('\n');
-
+    //StartTimer2();
+    //StartTimer3();
     // Variables
-    while(1);
-    /*
-    while(1){
-        while(GetIntFlagTimer2() == 0){}
-        ClearIntFlagTimer2();
-        LATEbits.LATE8 = !LATEbits.LATE8;     // Toggle Digital Pin 2
-        PutChar('+');
+    uint8_t choice=0;
+    uint8_t memchoice=-1;
+    uint8_t catcher;
+    uint8_t menu=1;
+    uint8_t wait;
+    int total;
+    while(1)
+    {
+        switch(choice){
+            case 0:     //MAIN MENU
+                if (memchoice!=0){
+                    printf("\e[1;1H\e[2J");                     //Clear screen.
+                    PutStringn("MENU:");
+                    PutStringn("1-Change OC channel;");
+                    PutStringn("2-Change ADC channel;");
+                    nPutString("OPTION: ");
+                    memchoice=0;
+                    menu=0;
+                    choice=99;
+                    break;
+                }
+                else{
+                    if(val<3 && val>0 ){            //Make sure the choice is valid   
+                        choice=val;
+                        memchoice=-1;
+                        menu=1;
+                        break;
+                    }
+                    else                            //If wrong value warn user.
+                    {
+                        PutStringn(" WRONG VALUE!");
+                        PutString("OPTION: ");
+                        choice=99;
+                        break;
+                    }
+                }
+            case 1:     //Option 1 
+                if (memchoice!=1){
+                    printf("\e[1;1H\e[2J");
+                    PutStringn("PWM OC CHANNEL OPTION [1..5]");
+                    PutString("Choose OC Channel: ");
+                    memchoice=1;
+                    menu=0;
+                }
+                else{
+                    if(val<6 && val>0 ){
+                        choice=0;
+                        menu=1;
+                        break;
+                    }
+                }
+                choice=99;
+                break;
+            case 2:     //Option 2
+                if (memchoice!=2){
+                    printf("\e[1;1H\e[2J");
+                    PutStringn("ADC CHANNEL OPTION AN[0...15]");
+                    PutString("Choose Channel: ");
+                    memchoice=choice;
+                    choice=99;
+                    menu=0;
+                }
+                else{
+                    if(val<15 && val>-1 ){            //Make sure the choice is valid
+                        choice=0;
+                        memchoice=-1;
+                        menu=1;
+                        break;
+                    }
+                    else{
+                        PutStringn(" WRONG VALUE!");
+                        PutString("Choose Channel: ");
+                        choice=99;
+                        break;
+                    }
+                }
+                break;
+            case 99:                                  //choice case
+                if (menu==1){
+                    choice=GetButton(1);
+                }
+                else{
+                    wait=1;
+                    total=0;
+                    while(wait){
+                        val=GetButton(&wait);
+                        if(-1<val && val<10){
+                            PutInt(val);
+                            total=val+(total*10);
+                        }
+                    }
+                    val=total;
+                    choice=memchoice;
+                }
+                break;
+            default:
+                break;
+        }
     };
-    while(1){
-        while(GetIntFlagTimer2() == 0){};
-        ADC_start();
-        while(ADC_IF() == 0);
-        ClearIntFlagTimer2();
-        val=ADC_read();
-        PutFloat(val,2);
-        PutChar('\r');
-        PutChar('\n');
-    }*/
     return 0;
 }

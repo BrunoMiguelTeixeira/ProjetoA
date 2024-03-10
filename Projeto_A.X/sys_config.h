@@ -1,6 +1,6 @@
 /* Analog to Digital section: */
 /* Sampling frequency */
-#define SAMPL_FREQ_HZ 50
+#define SAMPL_FREQ_HZ 200
 /* ADC channel (0 to 15) */
 #define ADC_CHAN 0
 /* Analog Output section: */
