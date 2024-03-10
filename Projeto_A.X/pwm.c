@@ -10,122 +10,59 @@ extern struct TimerConfig timer3;
 extern struct TimerConfig timer4;
 extern struct TimerConfig timer5;
 
-uint8_t ConfigPWM1(uint8_t timerSelect, uint8_t dutyCycle)
-{
-    struct TimerConfig timerSelected;
-    if (timerSelect == 2)         { timerSelected = timer2; OC1CONbits.OCTSEL = 0; }
-    else if (timerSelect == 3)    { timerSelected = timer3; OC1CONbits.OCTSEL = 1;}
-    else{
-        return 0x02;    // Timer not available, Exception 2
-    }
-    if (timerSelected.PR == 0){
-        return 0x01;    // Timer not initialized, Exception 1
-    }
-
-    OC1CON = 0;
-    if (timerSelected.timer32bit == 1){
-        OC1CONbits.OC32 = 1;        // 32-bit Timer source
-    }
-
-    OC1RS = ((timerSelected.PR + 1) * dutyCycle) / 100;
-    OC1CONbits.OCM = 0b110;     // PWM mode on OC1; Fault pin disabled
-    OC1CONbits.ON = 1;          // Enable OC1 module 
-
-    return 0x00;
+volatile struct listOC{
+    volatile uint32_t *OCxCON;
+    volatile uint32_t *OCxR;
+    volatile uint32_t *OCxRS;
+} OC[5] = {
+    {&OC1CON, &OC1R, &OC1RS},
+    {&OC2CON, &OC2R, &OC2RS},
+    {&OC3CON, &OC3R, &OC3RS},
+    {&OC4CON, &OC4R, &OC4RS},
+    {&OC5CON, &OC5R, &OC5RS}
 };
 
-uint8_t ConfigPWM2(uint8_t timerSelect, uint8_t dutyCycle)
+void ConfigDutyCycle(uint8_t ocSelect, uint8_t dutyCycle)
+{
+    OC[ocSelect - 1].OCxRS = ((timer2.PR + 1) * dutyCycle) / 100;
+}
+
+uint8_t ConfigPWM(uint8_t ocSelect, uint8_t timerSelect, uint8_t dutyCycle)
 {
     struct TimerConfig timerSelected;
-    if (timerSelect == 2)         { timerSelected = timer2; OC2CONbits.OCTSEL = 0; }
-    else if (timerSelect == 3)    { timerSelected = timer3; OC2CONbits.OCTSEL = 1;}
-    else{
-        return 0x02;    // Timer not available, Exception 2
-    }
-    if (timerSelected.PR == 0){
-        return 0x01;    // Timer not initialized, Exception 1
-    }
 
-    OC2CON = 0;
-    if (timerSelected.timer32bit == 1){
-        OC2CONbits.OC32 = 1;        // 32-bit Timer source
+    if (ocSelect > 5){
+        return 0x01;    // OC not available, Exception 1
+    }
+    if (dutyCycle > 100){
+        return 0x02;    // Duty Cycle out of range, Exception 2
+    }
+    if (timerSelect > 3 && timerSelect < 2){
+        return 0x03;    // Timer not available, Exception 3
     }
 
-    OC2RS = ((timerSelected.PR + 1) * dutyCycle) / 100;
-    OC2CONbits.OCM = 0b110;     // PWM mode on OC2; Fault pin disabled
-    OC2CONbits.ON = 1;          // Enable OC2 module 
+    OC[ocSelect - 1].OCxCON = 0;
+    OC[ocSelect - 1].OCxR = 0;
+    OC[ocSelect - 1].OCxRS = 0;
 
-    return 0x00;
-};
+    /* if (timerSelected.timer32bit == 1){
+        OC[ocSelect - 1].OCxCONbits.OC32 = 1;                              // 32-bit Timer source
+    } */    
 
-uint8_t ConfigPWM3(uint8_t timerSelect, uint8_t dutyCycle)
-{
-    struct TimerConfig timerSelected;
-    if (timerSelect == 2)         { timerSelected = timer2; OC3CONbits.OCTSEL = 0; }
-    else if (timerSelect == 3)    { timerSelected = timer3; OC3CONbits.OCTSEL = 1;}
-    else{
-        return 0x02;    // Timer not available, Exception 2
-    }
-    if (timerSelected.PR == 0){
-        return 0x01;    // Timer not initialized, Exception 1
-    }
+    /*  
+        ON       = 1: Enable Output Compare
+        FRZ      = 0: PWM continues in CPU Freeze mode
+        SIDL     = 0
+        [12:6]   = 000000
+        OC32     = 0: 16-bit Timer source
+        [3]      = 0
+        OCTSEL   = 0: Timer 2 is the clock source for this OC
+        OCM[2:0] = 110: PWM mode on OCx; Fault pin disabled
+    */
 
-    OC3CON = 0;
-    if (timerSelected.timer32bit == 1){
-        OC3CONbits.OC32 = 1;        // 32-bit Timer source
-    }
-
-    OC3RS = ((timerSelected.PR + 1) * dutyCycle) / 100;
-    OC3CONbits.OCM = 0b110;     // PWM mode on OC3; Fault pin disabled
-    OC3CONbits.ON = 1;          // Enable OC3 module 
-
-    return 0x00;
-};
-
-uint8_t ConfigPWM4(uint8_t timerSelect, uint8_t dutyCycle)
-{
-    struct TimerConfig timerSelected;
-    if (timerSelect == 2)         { timerSelected = timer2; OC4CONbits.OCTSEL = 0; }
-    else if (timerSelect == 3)    { timerSelected = timer3; OC4CONbits.OCTSEL = 1;}
-    else{
-        return 0x02;    // Timer not available, Exception 2
-    }
-    if (timerSelected.PR == 0){
-        return 0x01;    // Timer not initialized, Exception 1
-    }
-
-    OC4CON = 0;
-    if (timerSelected.timer32bit == 1){
-        OC4CONbits.OC32 = 1;        // 32-bit Timer source
-    }
-
-    OC4RS = ((timerSelected.PR + 1) * dutyCycle) / 100;
-    OC4CONbits.OCM = 0b110;     // PWM mode on OC4; Fault pin disabled
-    OC4CONbits.ON = 1;          // Enable OC4 module 
-
-    return 0x00;
-};
-
-uint8_t ConfigPWM5(uint8_t timerSelect, uint8_t dutyCycle)
-{
-    struct TimerConfig timerSelected;
-    if (timerSelect == 2)         { timerSelected = timer2; OC5CONbits.OCTSEL = 0; }
-    else if (timerSelect == 3)    { timerSelected = timer3; OC5CONbits.OCTSEL = 1;}
-    else{
-        return 0x02;    // Timer not available, Exception 2
-    }
-    if (timerSelected.PR == 0){
-        return 0x01;    // Timer not initialized, Exception 1
-    }
-
-    OC5CON = 0;
-    if (timerSelected.timer32bit == 1){
-        OC5CONbits.OC32 = 1;        // 32-bit Timer source
-    }
-
-    OC5RS = ((timerSelected.PR + 1) * dutyCycle) / 100;
-    OC5CONbits.OCM = 0b110;     // PWM mode on OC5; Fault pin disabled
-    OC5CONbits.ON = 1;          // Enable OC5 module 
+    OC[ocSelect - 1].OCxRS = ((timer2.PR + 1) * dutyCycle) / 100;
+    if (timerSelect == 2) { timerSelected = timer2; OC[ocSelect - 1].OCxCON = 0b1000000000000110;}
+    if (timerSelect == 3) { timerSelected = timer3; OC[ocSelect - 1].OCxCON = 0b1000000000001110;}
 
     return 0x00;
 };
