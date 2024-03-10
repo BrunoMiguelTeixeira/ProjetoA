@@ -8,7 +8,8 @@
 #include <xc.h>
 #include <stdio.h>
 
-volatile float val = 2;
+
+volatile float val;
 
 /*
  * Interrupt Callback for Timer3, responsible for reading the ADC value
@@ -86,11 +87,9 @@ int main(void){
     uint8_t catcher;
     uint8_t menu = 1;
     uint8_t wait;
-    uint8_t total;
-    /* ------------------------- */
-
     while(1)
     {
+        /*
         switch(choice){
             //Case for Main Menu
             case 0:     
@@ -162,26 +161,17 @@ int main(void){
                 }
                 break;
             case 99:                                  //choice case
-                if (menu == 1){
-                    choice = GetButton(1);
+                if (menu==1){
+                    choice=GetInteger();
                 }
                 else{
-                    wait = 1;
-                    total = 0;
-                    while(wait){
-                        val = GetButton(&wait);
-                        if(-1 < val && val < 10){
-                            PutInt(val);
-                            total= val + (total * 10);
-                        }
-                    }
-                    val = total;
-                    choice = memchoice;
+                    val=GetInteger();
+                    choice=memchoice;
                 }
                 break;
             default:
                 break;
-        }
-    };
+        };*/
+    }
     return 0;
 }

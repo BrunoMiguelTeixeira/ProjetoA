@@ -19,5 +19,5 @@ void PutFloat(float Float,uint8_t val);
 void PutString(char *Char);
 void PutStringn(char *Char);
 void nPutString(char *Char);
-uint8_t GetButton(uint8_t *Enter_press);
+uint8_t GetInteger(void);
 #endif
