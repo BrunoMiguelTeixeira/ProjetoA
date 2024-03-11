@@ -141,15 +141,8 @@ void nPutString(char *Char){
     PutChar('\n');
     PutString(Char);
 }
-/*******************************************************************
- * Function: PutInt()
- * Precondition:
- * Input:       Integer
- * Output:      None
- * Side Effects:None
- * Overview:    Puts the integer has a char and into UART tx reg for transmission.
- * Note:        None
- *******************************************************************/
+
+
 void PutInt(int Integer){
         if (Integer == 0) {
         PutChar('0');
