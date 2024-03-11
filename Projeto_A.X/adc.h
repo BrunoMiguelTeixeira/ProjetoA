@@ -6,70 +6,70 @@ typedef enum{AN0=0,AN1,AN2,AN3,AN4,AN5,AN6,AN7,AN8,AN9,AN10,AN11,AN12,AN13,AN14,
 }ADCchannels;
 
 
-/*******************************************************************
- * Function: ADC_init()
- * Precondition:
- * Input:       None
- * Output:      None
- * Side Effects:None
- * Overview:    Starts ADC with predetermined options and settings.
- * Note:        None
- *******************************************************************/
+/**
+ * Function: ADC_init()\n
+ * Precondition:\n
+ * Input: None\n
+ * Output: None\n
+ * Side Effects: None\n
+ * Overview: Starts ADC with predetermined options and settings\n
+ * Note: None\n
+*/
 void ADC_init(void);
 
-/*******************************************************************
- * Function: ADC_input()
- * Precondition:
- * Input:       Unsigned integer
- * Output:      Integer
- * Side Effects:None
- * Overview:    Function to choose ADC output pin.
- * Note:        None
- *******************************************************************/
+/**
+ * Function: ADC_input() \n
+ * Precondition: \n
+ * Input: Unsigned integer\n
+ * Output: Integer\n
+ * Side Effects: None\n
+ * Overview: Function to choose ADC output pin\n
+ * Note: None\n
+*/
 int ADC_input(uint16_t a);
 
 
-/*******************************************************************
- * Function: ADC_enable()
- * Precondition:
- * Input:       None
- * Output:      None
- * Side Effects:None
- * Overview:    Function enables ADC.
- * Note:        None
- *******************************************************************/
+/**
+ * Function: ADC_enable() \n
+ * Precondition:\n
+ * Input: None \n
+ * Output: None \n
+ * Side Effects: None \n
+ * Overview: Function enables ADC\n
+ * Note: None\n
+*/
 void ADC_enable(void);
 
-/*******************************************************************
- * Function: ADC_read()
- * Precondition:
- * Input:       None
- * Output:      Float
- * Side Effects:None
- * Overview:    Function reads ADC BUF0 and outputs has float.
- * Note:        None
- *******************************************************************/
+/**
+ * Function: ADC_read()\n
+ * Precondition: \n
+ * Input: None\n
+ * Output: Float\n
+ * Side Effects: None\n
+ * Overview: Function reads ADC BUF0 and outputs has float\n
+ * Note: None\n
+ */
 float ADC_read(void);
 
-/*******************************************************************
- * Function: ADC_IF()
- * Precondition:
- * Input:       None
- * Output:      Unsigned Integer
- * Side Effects:None
- * Overview:    Resets ADC Interruption Flag.
- * Note:        None
- *******************************************************************/
+/**
+ * Function: ADC_IF()\n
+ * Precondition:\n
+ * Input: None\n
+ * Output: Unsigned Integer\n
+ * Side Effects: None\n
+ * Overview: Resets ADC Interruption Flag\n
+ * Note: None\n
+ */
 uint8_t ADC_IF(void);
 
-/*******************************************************************
- * Function: ADC_start()
- * Precondition:
- * Input:       None
- * Output:      None
- * Side Effects:None
- * Overview:    ADC starts conversion.
- * Note:        None
- *******************************************************************/
+/**
+ * Function: ADC_start()\n
+ * Precondition:\n
+ * Input: None\n
+ * Output: None\n
+ * Side Effects: None\n
+ * Overview: ADC starts conversion\n
+ * Note: None\n
+*/
 void ADC_start(void);
 #endif

@@ -15,72 +15,72 @@ int UartClose(void);
 int GetChar(uint8_t *byte);
 void PutChar(uint8_t txChar);
 
-/*******************************************************************
- * Function: PutInt()
- * Precondition:
- * Input:       Integer
- * Output:      None
- * Side Effects:None
- * Overview:    Puts the integer has a char and into UART tx reg for transmission.
- * Note:        None
- *******************************************************************/
+/**
+ * Function: PutInt()\n
+ * Precondition:\n
+ * Input:       Integer\n
+ * Output:      None\n
+ * Side Effects:None\n
+ * Overview:    Puts the integer has a char and into UART tx reg for transmission\n
+ * Note:        None\n
+ */
 void PutInt(int Integer);
 
-/*******************************************************************
- * Function: PutFloat()
- * Precondition:
- * Input:       Float
- * Output:      None
- * Side Effects:None
- * Overview:    Puts the float has a char and into UART tx reg for transmission.
- * Note:        None
- *******************************************************************/
+/**
+ * Function: PutFloat()\n
+ * Precondition:\n
+ * Input: Float\n
+ * Output: None\n
+ * Side Effects: None\n
+ * Overview: Puts the float has a char and into UART tx reg for transmission\n
+ * Note: None\n
+ */
 void PutFloat(float Float,uint8_t val);
 
-/********************************************************************
-* Function: 	PutString()
-* Precondition: 
-* Input: 		*Char
-* Output:		None
-* Side Effects:	None.
-* Overview:     Breaks the string into Char and puts it into UART tx reg for transmission
-* Note:		 	None.
-********************************************************************/
+/**
+* Function: PutString()\n
+* Precondition: \n
+* Input: *Char\n
+* Output: None\n
+* Side Effects:	None\n
+* Overview: Breaks the string into Char and puts it into UART tx reg for transmission\n
+* Note: None\n
+*/
 void PutString(char *Char);
 
 
-/********************************************************************
-* Function: 	PutStringn()
-* Precondition: 
-* Input: 		*Char
-* Output:		None
-* Side Effects:	None.
-* Overview:     Breaks the string into Char,add '\r' '\n' at the end and puts it into UART tx reg for transmission
-* Note:		 	None.
-********************************************************************/
+/**
+* Function: PutStringn()\n
+* Precondition: \n
+* Input: *Char\n
+* Output: None\n
+* Side Effects:	None\n
+* Overview: Breaks the string into Char,add '\r' '\ n' at the end and puts it into UART tx reg for transmission\n
+* Note: None\n
+*/
 void PutStringn(char *Char);
 
 
-/********************************************************************
-* Function: 	nPutString()
-* Precondition: 
-* Input: 		*Char
-* Output:		None
-* Side Effects:	None.
-* Overview:     Breaks the string into Char,add '\r' '\n' at the beginning and puts it into UART tx reg for transmission
-* Note:		 	None.
-********************************************************************/
+/**
+* Function: nPutString()\n
+* Precondition: \n
+* Input: *Char \n
+* Output: None\n
+* Side Effects:	None\n
+* Overview: Breaks the string into Char,add '\r' '\ n' at the beginning and puts it into UART tx reg for transmission\n
+* Note: None\n
+*/
 void nPutString(char *Char);
 
 
-/*******************************************************************
- * Function: GetInt()
- * Precondition:
- * Input:       None
- * Output:      unsigned integer
- * Side Effects:None
- * Overview:    Reads user number inputs untill Enter is pressed.
- * Note:        None
- *******************************************************************/
+/**
+ * Function: GetInteger()\n
+ * Precondition:\n
+ * Input: None\n
+ * Output: Unsigned integer\n
+ * Side Effects: None\n
+ * Overview: Reads user number inputs until Enter is pressed\n
+ * Note: None\n
+*/
 uint8_t GetInteger(void);
 #endif
