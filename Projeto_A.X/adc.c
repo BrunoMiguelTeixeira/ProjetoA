@@ -23,8 +23,8 @@ int ADC_input(uint16_t a){
 void ADC_enable(void){
     AD1CON1bits.ON = 1; // Enable A/D module
 }
-float ADC_read(void){
-    return (ADC1BUF0 * 3.3) / 1023;
+uint16_t ADC_read(void){
+    return (uint16_t)ADC1BUF0;
 }
 
 uint8_t ADC_IF(void){

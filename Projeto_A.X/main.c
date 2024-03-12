@@ -9,8 +9,9 @@
 #include <stdio.h>
 
 
-volatile float val;
+volatile uint16_t val;
 volatile uint8_t ocChannel = PWM_OC_CHAN, adcChannel = ADC_CHAN;
+volatile uint8_t dutyCycle = 5;
 
 /*
  * Interrupt Callback for Timer3, responsible for reading the ADC value
@@ -27,6 +28,8 @@ void __ISR (_TIMER_3_VECTOR, IPL5SRS) T3Interrupt(void)
     //PutInt(timer3.PR);
     //PutStringn(" ");
 
+    
+    IFS1bits.AD1IF = 0; // Reset interrupt flag
     ClearIntFlagTimer3();
 }
 
@@ -35,8 +38,14 @@ void __ISR (_TIMER_3_VECTOR, IPL5SRS) T3Interrupt(void)
  */
 void __ISR (_TIMER_2_VECTOR, IPL6SRS) T2Interrupt(void)
 {
-    uint8_t dutyCycle = (val / 3.3) * 100;
+    dutyCycle = (val * 100)/1023;
     ConfigDutyCycle(ocChannel, dutyCycle);
+    
+    //PutInt(dutyCycle);
+    //PutStringn(" ");
+    
+    LATEbits.LATE9 = !LATEbits.LATE9;
+    
     ClearIntFlagTimer2();
 }
 
@@ -47,6 +56,9 @@ int main(void){
     // Config Digital Pin 13 (RA3) as output
     TRISAbits.TRISA3 = 0;       // Set Digital Pin 13 as output
     LATAbits.LATA3 = 0;         // Turn off Digital Pin 13
+    
+    TRISEbits.TRISE9 = 0;
+    LATEbits.LATE9 = 0;
 
     /* ------- SETUP INTERRUPTS ------- */
     /* Set Interrupt Controller for multi-vector mode */
@@ -202,6 +214,7 @@ int main(void){
 
     while(1)
     {
+        
         // Once the program starts, it will be stuck in the while loop,
         // and the interrupts will take care of the rest.   
     }
